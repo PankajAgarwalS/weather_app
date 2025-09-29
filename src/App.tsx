@@ -1,19 +1,15 @@
-// --- 1. CONFIGURATION ---
-// !!! CRITICAL STEP !!!
-// Please replace this placeholder with your actual OpenWeatherMap API Key.
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import "./styles.css"; // Import the stylesheet for custom CSS classes
 
-// =======================================================
 // 1. Data Models and Constants
-// =======================================================
 
-// Note: In a real app, use environment variables and .gitignore for the key.
+// Note: Replace the .env file with a openweatherapi_key.
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const CURRENT_WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
 const FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"; // For 5-day forecast
 
-// Represents the core weather data we need
+// Represents the core weather data
+
 interface CurrentWeatherData {
   city: string;
   country: string;
@@ -32,6 +28,7 @@ interface ForecastItem {
 }
 
 // Represents the overall application state
+
 interface WeatherState {
   currentData: CurrentWeatherData | null;
   forecastData: ForecastItem[];
@@ -40,9 +37,7 @@ interface WeatherState {
   lastCity: string | null;
 }
 
-// =======================================================
 // 2. Custom Hook for State Management and Fetching
-// =======================================================
 
 const initialWeatherState: WeatherState = {
   currentData: null,
@@ -53,7 +48,6 @@ const initialWeatherState: WeatherState = {
   lastCity: localStorage.getItem("lastCity") || null,
 };
 
-/** Helper to convert OpenWeatherMap response to our simplified model */
 const mapCurrentData = (json: any): CurrentWeatherData => ({
   city: json.name,
   country: json.sys.country,
@@ -77,7 +71,6 @@ const mapForecastData = (json: any): ForecastItem[] => {
     const dayKey = date.toISOString().split("T")[0];
     const hour = date.getHours();
 
-    // Only take the first measurement for the day, or one near midday (11-1 PM)
     if (!forecastMap.has(dayKey) || (hour >= 11 && hour <= 13)) {
       forecastMap.set(dayKey, {
         timestamp: item.dt,
@@ -88,7 +81,6 @@ const mapForecastData = (json: any): ForecastItem[] => {
     }
   });
 
-  // Convert map values to array, excluding the current day's forecast
   const todayKey = new Date().toISOString().split("T")[0];
   const forecastArray = Array.from(forecastMap.values());
 
@@ -198,9 +190,7 @@ const useWeather = () => {
   return { ...state, fetchWeather };
 };
 
-// =======================================================
 // 3. Components
-// =======================================================
 
 /** Helper to get the icon URL */
 const getIconUrl = (iconCode: string) =>
@@ -319,7 +309,7 @@ const WeatherDisplay: React.FC<{ data: CurrentWeatherData }> = ({ data }) => {
   );
 };
 
-// --- ForecastDisplay Component (Bonus Feature) ---
+// --- ForecastDisplay Component ---
 const ForecastDisplay: React.FC<{ data: ForecastItem[] }> = ({ data }) => {
   if (data.length === 0) return null;
 
