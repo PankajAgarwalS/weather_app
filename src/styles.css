@@ -1,0 +1,293 @@
+/*
+ * Application Styles: Simple Weather Viewer
+ * This CSS provides the layout, aesthetics, and responsiveness for the app,
+ * using standard CSS rules to match the class names used in App.tsx.
+ */
+
+/* 1. Global/Base Styles */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f0f4f8; /* Light background */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top to prevent weird centering issues */
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+}
+
+/* 2. Main Container */
+.weather-container {
+  max-width: 480px;
+  width: 90%; /* Responsive width */
+  margin: 40px auto;
+  padding: 25px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.app-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-align: center;
+  color: #1e3a8a; /* Dark blue/indigo */
+  margin-bottom: 25px;
+}
+
+/* 3. Search Bar */
+.search-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.search-button {
+  padding: 0 15px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+/* 4. Utility Messages (Loading, Error, Default) */
+.loading-indicator,
+.default-prompt {
+  text-align: center;
+  padding: 20px;
+  color: #475569;
+  font-style: italic;
+}
+
+.error-message {
+  padding: 15px;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Loading Spinner (Pure CSS) */
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 5. Current Weather Card */
+.weather-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  background: #f8fafc;
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.weather-city-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+.weather-condition {
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.weather-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.main-temp {
+  font-size: 4.5rem; /* Large, impressive temperature */
+  font-weight: 900;
+  color: #1e3a8a;
+  text-align: center;
+  margin: 15px 0 30px;
+}
+
+/* 6. Details Grid (Humidity, Wind) */
+.weather-details-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.detail-item {
+  display: flex;
+  /* FIX: Change from column to row to align icon next to text block */
+  flex-direction: row;
+  align-items: center;
+  /* Removed text-align: center as children have different alignments */
+  text-align: left;
+  width: 45%;
+  /* Added padding/gap for spacing */
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.detail-item > div {
+  /* Ensures the text block within detail-item uses the remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-icon {
+  width: 28px;
+  height: 28px;
+  color: #3b82f6;
+  /* Removed margin-bottom since it's now row layout */
+  margin-bottom: 0;
+  flex-shrink: 0; /* Ensures the icon doesn't shrink */
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.detail-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 2px 0 0;
+}
+
+/* 7. Forecast Section */
+.forecast-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.forecast-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  text-align: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.forecast-grid {
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 5px;
+}
+
+.forecast-item {
+  flex-shrink: 0; /* Prevents items from shrinking in the grid */
+  width: 80px;
+  text-align: center;
+  padding: 10px 5px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.forecast-day {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 5px;
+}
+
+.forecast-icon {
+  width: 40px;
+  height: 40px;
+  margin: 5px auto;
+}
+
+.forecast-temp {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 5px;
+}
+
+/* 8. Mobile Responsiveness */
+@media (max-width: 400px) {
+  .weather-container {
+    margin: 20px auto;
+    padding: 15px;
+    width: 95%;
+  }
+
+  .main-temp {
+    font-size: 3.5rem;
+  }
+
+  .weather-city-title {
+    font-size: 1.4rem;
+  }
+
+  .detail-value {
+    font-size: 1.2rem;
+  }
+}
